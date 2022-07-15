@@ -1,0 +1,4 @@
+Covid-19 System 
+First 
+open cmd type python3 Covid-19_Retime.py
+thx for open this fucking file 
