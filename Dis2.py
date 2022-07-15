@@ -16,7 +16,7 @@ from csv import reader as csvreader
 
 
 sg.theme('Dark Red')
-# sg.theme('Light Green 6')     # If you want a slightly more upbeat color theme
+# sg.theme('Light Green 6')     
 TXT_COLOR = sg.theme_text_color()
 BG_COLOR = sg.theme_background_color()
 ALPHA = 1.0
@@ -75,8 +75,8 @@ def distance_list(settings, window):
 
     # Find location based on my zip code
     try:
-        # location = geolocator.geocode({'postalcode' : '42420', 'country':settings['country']})      # type: geopy.location.Location
-        location = geolocator.geocode(f'{settings["zipcode"]} {settings["country"]}')      # type: geopy.location.Location
+        # location = geolocator.geocode({'postalcode' : '42420', 'country':settings['country']})     
+        location = geolocator.geocode(f'{settings["zipcode"]} {settings["country"]}')      
         my_loc = (location.latitude, location.longitude)
         window['-LOCATION-'].update(location.address)
         window['-LATLON-'].update(my_loc)
@@ -86,7 +86,7 @@ def distance_list(settings, window):
         exit(69)
 
     # Download and parse the CSV file
-    file_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
+    file_url = "https://github.com/asen01wang/covid-19-all-word/blob/a96f0eb608bad57bdfadb52e65c47e7ca101b696/Covid-19%20CVS%20file/comfirm.cvs"
     data = [d.decode('utf-8') for d in request.urlopen(file_url).readlines()]
 
     # Add blank space for missing cities to prevent dropping columns
