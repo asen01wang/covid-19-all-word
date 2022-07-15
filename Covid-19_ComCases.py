@@ -39,10 +39,9 @@ DEFAULT_GROWTH_RATE = 1.25      # default for forecasting
 DISPLAY_DAYS = 30               # default number of days to display
 MAX_FORECASTED_DAYS = 100
 
-LINK_CONFIRMED_DATA = r'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
+LINK_CONFIRMED_DATA = r'https://github.com/asen01wang/covid-19-all-word/blob/07ae58577f36fc5f843d1151b5948dc8cd8b0218/Covid-19%20CVS%20file/comfirm.cvs'
 
-LINK_DEATHS_DATA = r"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
-
+LINK_DEATHS_DATA = r"https://github.com/asen01wang/covid-19-all-word/blob/07ae58577f36fc5f843d1151b5948dc8cd8b0218/Covid-19%20CVS%20file/delth_comfirm.csv"
 
 sg.theme('Dark Blue 17')
 
@@ -265,7 +264,7 @@ def update_window(window, loc_data_dict, chosen_locations, settings, subtract_da
 
     window['-UPDATED-'].update('Updated ' + datetime.now().strftime("%B %d %I:%M:%S %p") + f'\nDate of last datapoint {loc_data_dict[("Header","")][-1]}')
 
-########################################## MAIN ##########################################
+########################################## MAIN EXAMPLE ##########################################
 
 
 ##############################################################
@@ -282,7 +281,6 @@ def prepare_data(link, settings):
     """
 
     data = download_data(link)
-    # remove blank rows
     new_data = []
     for row in data:
         if row:
