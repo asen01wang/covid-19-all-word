@@ -20,7 +20,7 @@ from time import time
 
     Use the Johns Hopkins datasets to graphical display and analyse the spread of the C19 virus over time.
     The data is housed on the Johns Hopkins Covid19 GitHub Repository:
-        https://github.com/CSSEGISandData/COVID-19
+        https://github.com/asen01wang/covid-19-all-word.git
 
 
     Copyright 2020 PySimpleGUI.com
@@ -46,12 +46,11 @@ MAX_FORECASTED_DAYS = 100
 SEC_PER_DAY = 86400
 REFRESH_TIME_MILLISECONDS = 82
 
-# LINK_CONFIRMED_DATA = r'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv'
-LINK_CONFIRMED_DATA = r'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
+# LINK_CONFIRMED_DATA = r'https://github.com/asen01wang/covid-19-all-word/blob/c4e78a688086030b03dd2405c8745f8e28f190c0/Covid-19%20CVS%20file/comfirm.cvs'
+LINK_CONFIRMED_DATA = r'https://github.com/asen01wang/covid-19-all-word/blob/c4e78a688086030b03dd2405c8745f8e28f190c0/Covid-19%20CVS%20file/comfirm.cvs'
 
-# LINK_DEATHS_DATA = r"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv"
-LINK_DEATHS_DATA = r"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
-
+# LINK_DEATHS_DATA = r"https://github.com/asen01wang/covid-19-all-word/blob/c4e78a688086030b03dd2405c8745f8e28f190c0/Covid-19%20CVS%20file/comfim2.csvhttps://github.com/asen01wang/covid-19-all-word/blob/c4e78a688086030b03dd2405c8745f8e28f190c0/Covid-19%20CVS%20file/comfim2.csv""
+LINK_DEATHS_DATA = r"https://github.com/asen01wang/covid-19-all-word/blob/c4e78a688086030b03dd2405c8745f8e28f190c0/Covid-19%20CVS%20file/comfim2.csv"
 sg.theme('Dark Blue 17')
 
 DEFAULT_SETTINGS = {'rows': MAX_ROWS, 'cols': MAX_COLS, 'theme': 'Dark Blue 17', 'forecasting': False,
@@ -76,8 +75,7 @@ def load_settings():
         with open(SETTINGS_FILE, 'r') as f:
             settings = jsonload(f)
     except:
-        sg.popup_quick_message('No settings file found... will create one for you', keep_on_top=True, background_color='red', text_color='white')
-        # settings = change_settings(DEFAULT_SETTINGS)
+        sg.popup_quick_message('No settings file found... will create one for you', keep_on_top=True, background_color='red', text_color='white'
         settings = DEFAULT_SETTINGS
         save_settings(settings)
     return settings
@@ -245,7 +243,7 @@ def update_window(window, loc_data_dict, chosen_locations, settings, subtract_da
     window['-UPDATED-'].update('Updated ' + datetime.now().strftime("%B %d %I:%M:%S %p") + f'\nDate of last datapoint {loc_data_dict[("Header", "")][-1]}')
 
 
-########################################## MAIN ##########################################
+########################################## MAIN EXAMPLE ##########################################
 
 
 ##############################################################
@@ -273,12 +271,8 @@ def prepare_data(link):
     graph_values = []
     for row in graph_data:
         graph_values.append([int(d) if d != '' else 0 for d in row])
-    # make list of countries as tuples (country, privince/state)
     locations = list(set([(row[1], row[0]) for row in data[1:]]))
     locations.append(('Worldwide', ''))
-    # Make single row of data per country that will be graphed
-    # Location - Data dict.  For each location contains the totals for that location
-    # { tuple : list }
     loc_data_dict = {}
     data_points = len(graph_data[0])
     for loc in locations:
@@ -383,7 +377,7 @@ def main(refresh_minutes):
         event, values = window.read(timeout=timeout)
         if event in (None, 'Exit', '-QUIT-'):
             break
-        if event == '-SETTINGS-' or force_new_settings:  # "Settings" at bottom of window
+        if event == '-SETTINGS-' or force_new_settings: 
             force_new_settings = False
             settings = change_settings(settings)
             save_settings(settings, chosen_locations)
@@ -400,7 +394,7 @@ def main(refresh_minutes):
             save_settings(settings, chosen_locations)
             redraw_graphs = True
         elif event == '-SOURCE LINK-':  # Clicked on data text, open browser
-            webopen(r'https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series')
+            webopen(r'https://github.com/asen01wang/covid-19-all-word/tree/main/Covid-19%20CVS%20file')
         elif event == '-RAW DATA-':
             sg.Print(loc_data_dict[("Worldwide", "Total")])
 
