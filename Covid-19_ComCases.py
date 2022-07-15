@@ -20,7 +20,7 @@ from webbrowser import open as webopen
     
     Use the Johns Hopkins datasets to graphical display and analyse the spread of the C19 virus over time.
     The data is housed on the Johns Hopkins Covid19 GitHub Repository:
-        https://github.com/CSSEGISandData/COVID-19
+        https://github.com/asen01wang/covid-19-all-word.git
     
     
     Copyright 2020 PySimpleGUI.com
@@ -39,10 +39,8 @@ DEFAULT_GROWTH_RATE = 1.25      # default for forecasting
 DISPLAY_DAYS = 30               # default number of days to display
 MAX_FORECASTED_DAYS = 100
 
-# LINK_CONFIRMED_DATA = r'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv'
 LINK_CONFIRMED_DATA = r'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
 
-# LINK_DEATHS_DATA = r"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv"
 LINK_DEATHS_DATA = r"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
 
 
@@ -168,11 +166,9 @@ def download_data(link):
     file_url = link
     data = [d.decode('utf-8') for d in request.urlopen(file_url).readlines()]
 
-    # Add blank space for missing cities to prevent dropping columns
     for n, row in enumerate(data):
         data[n] = " " + row if row[0] == "," else row
 
-    # Split each row into a list of data
     data_split = [row for row in csvreader(data)]
 
     return data_split
@@ -214,12 +210,11 @@ def draw_graph(window, location, graph_num, values, settings, future_days):
         except:
             max_value = max(values)
     graph.change_coordinates((0, 0), (DATA_SIZE[0], max_value))
-    # calculate how big the bars should be
+
     num_values = len(values)
     bar_width_total = DATA_SIZE[0] / num_values
     bar_width = bar_width_total * 2 / 3
     bar_width_spacing = bar_width_total
-    # Draw the Graph
     graph.erase()
     for i, graph_value in enumerate(values):
         bar_color = sg.theme_text_color()  if i < num_values-future_days else 'red'
@@ -237,7 +232,7 @@ def update_window(window, loc_data_dict, chosen_locations, settings, subtract_da
         for col in range(max_cols):
             window[row*max_cols+col].erase()
             window[f'-TITLE-{row*max_cols+col}'].update('')
-    # Display date of last data point
+
     header = loc_data_dict[('Header','')]
     end_date = header[-(subtract_days+1)]
     start = len(header)-settings['display days']-(subtract_days+1)
@@ -245,7 +240,7 @@ def update_window(window, loc_data_dict, chosen_locations, settings, subtract_da
         start = 0
     start_date = header[start]
     window['-DATE-'].update(f'{start_date} - {end_date}')
-    # Draw the graphs
+   
     for i, loc in enumerate(chosen_locations):
         if i >= max_cols * max_rows:
             break
@@ -299,12 +294,10 @@ def prepare_data(link, settings):
     graph_values = []
     for row in graph_data:
         graph_values.append([int(d) if d!= '' else 0 for d in row])
-    # make list of countries as tuples (country, privince/state)
+
     locations = list(set([(row[1], row[0]) for row in data[1:]]))
     locations.append(('Worldwide', ''))
-    # Make single row of data per country that will be graphed
-    # Location - Data dict.  For each location contains the totals for that location
-    # { tuple : list }
+ 
     loc_data_dict = {}
     data_points = len(graph_data[0])
     for loc in locations:
@@ -333,7 +326,6 @@ def prepare_data(link, settings):
 def create_window(settings):
     max_rows, max_cols = int(settings['rows']), int(settings['cols'])
     graph_size = int(settings['graph_x_size']), int(settings['graph_y_size'])
-    # Create grid of Graphs with titles
     graph_layout = [[]]
     for row in range(max_rows):
         graph_row = []
@@ -347,7 +339,6 @@ def create_window(settings):
     else:
         heading = 'COVID-19 Deaths By Region      '
 
-    # Create the layout
     layout = [[sg.T(heading, font='Any 20'),
                sg.T(size=(15,1), font='Any 20', key='-DATE-')],]
     layout += graph_layout
@@ -373,7 +364,6 @@ def create_window(settings):
 
     window = sg.Window('COVID-19 Confirmed Cases', layout, grab_anywhere=False, no_titlebar=False, margins=(0,0), icon=ICON,  finalize=True)
 
-    # set cursor to hand for all text elements that looks like links
     _ = [window[key].set_cursor('hand2') for key in ('-SETTINGS-', '-LOCATIONS-', '-REFRESH-', 'Exit', '-SOURCE LINK-', '-PSG LINK-')]
 
     return window
@@ -442,8 +432,8 @@ def main(refresh_minutes):
             window['-SLIDER-'].update(range=(0, num_data_points - 1))
             window['-REWIND MESSAGE-'].update(f'Rewind up to {num_data_points - 1} days')
         elif event == '-SOURCE LINK-':      # Clicked on data text, open browser
-            webopen(r'https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series')
-        elif event == '-PSG LINK-':      # Clicked on data text, open browser
+            webopen(r'https://github.com/asen01wang/covid-19-all-word/tree/main/Covid-19%20CVS%20file')
+        elif event == '-PSG LINK-':      
             webopen(r'http://www.PySimpleGUI.com')
         elif event == '-RAW DATA-':
             sg.Print(loc_data_dict[("Worldwide","Total")])
